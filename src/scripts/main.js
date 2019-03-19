@@ -47,7 +47,26 @@ const newYorkBusinesses = businesses.filter(business => {
 });
 // writeToDom(newYorkBusinesses);
 
-
+//filter company's in the manufacturing industry
 const manufacturingBusinesses = businesses.filter(b => b.companyIndustry == "Manufacturing");
 
-writeToDom(manufacturingBusinesses);
+// writeToDom(manufacturingBusinesses);
+
+const agents = businesses.map(business => {
+    let agent = {}
+    agent.fullName = `${business.purchasingAgent.nameFirst}` + ` ${business.purchasingAgent.nameLast}`;
+    agent.companyName = business.companyName;
+    agent.phone = business.phoneWork;
+    return agent
+})
+
+
+agents.forEach(e => {
+    outEl.innerHTML += `
+        <h3>${e.fullName}</h3>
+        <p>${e.companyName}</p>
+        <p>${e.phone}</p>
+        <hr>
+        `
+})
+
