@@ -52,21 +52,51 @@ const manufacturingBusinesses = businesses.filter(b => b.companyIndustry == "Man
 
 // writeToDom(manufacturingBusinesses);
 
-const agents = businesses.map(business => {
-    let agent = {}
-    agent.fullName = `${business.purchasingAgent.nameFirst}` + ` ${business.purchasingAgent.nameLast}`;
-    agent.companyName = business.companyName;
-    agent.phone = business.phoneWork;
-    return agent
-})
+//Map Function
+// const agents = businesses.map(business => {
+//     let agent = {}
+//     agent.fullName = `${business.purchasingAgent.nameFirst}` + ` ${business.purchasingAgent.nameLast}`;
+//     agent.companyName = business.companyName;
+//     agent.phone = business.phoneWork;
+//     return agent
+// })
 
 
-agents.forEach(e => {
-    outEl.innerHTML += `
-        <h3>${e.fullName}</h3>
-        <p>${e.companyName}</p>
-        <p>${e.phone}</p>
-        <hr>
-        `
-})
+// agents.forEach(e => {
+//     outEl.innerHTML += `
+//         <h3>${e.fullName}</h3>
+//         <p>${e.companyName}</p>
+//         <p>${e.phone}</p>
+//         <hr>
+//         `
+// })
+
+document
+    .querySelector("#companySearch")
+    .addEventListener("keypress", keyPressEvent => {
+        if (keyPressEvent.charCode === 13) {
+            /* WHEN  USER PRESSES ENTER, FIND MATCHING BUSINESS */
+            const foundAgent = businesses.find(
+                agent =>
+                    agent.purchasingAgent.nameFirst.includes(keyPressEvent.target.value) ||
+                    agent.purchasingAgent.nameLast.includes(keyPressEvent.target.value)
+            )
+
+            outEl.innerHTML = `
+                <h2>
+                ${foundAgent.purchasingAgent.nameFirst} ${foundAgent.purchasingAgent.nameLast}
+                </h2>
+                <section>
+                ${foundAgent.addressFullStreet}
+
+                </section>
+                <section>
+                ${foundAgent.addressCity},
+                ${foundAgent.addressStateCode}
+                ${foundAgent.addressZipCode} 
+                </section>
+            `;
+        }
+    });
+
 
